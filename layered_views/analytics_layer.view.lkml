@@ -9,6 +9,29 @@ view: +predict_output {
     datatype: date
   }
 
+  measure: delayed_count {
+    sql: ${delayed} ;;
+    type: count_distinct
+    filters: [delayed: "1"]
+  }
+
+  measure: non-delayed_count {
+    sql: ${delayed} ;;
+    type: count_distinct
+    filters: [delayed: "0"]
+  }
+
+  measure:  percent_delayed {
+    sql: ${delayed_count}/NULLIF((${delayed_count}+${non-delayed_count}),0) ;;
+    type: number
+    value_format_name: percent_1
+  }
+
+  measure: average_delay_probability {
+    sql: ${pred} ;;
+    type: average
+  }
+
 
 
 
