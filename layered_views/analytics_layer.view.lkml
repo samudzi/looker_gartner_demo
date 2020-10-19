@@ -1,5 +1,20 @@
 include: "/base_views/*"
 
+view: +prototype_tf_train {
+
+  dimension_group:  flight_date {
+    sql: DATE(${year},${month},${dayof_month}) ;;
+    type: time
+    timeframes: [date,month,quarter,week,year,raw]
+    datatype: date
+    }
+
+
+}
+
+
+
+
 view: +predict_output {
 
   dimension_group:  flight_date {
@@ -12,15 +27,27 @@ view: +predict_output {
   dimension: pred_isAccurate {
     case: {
       when: {
-        sql: ${pred} => 0.5 AND ${delayed} = 1 ;;
+        sql: ${pred} >= 0.5 AND ${delayed} = "1" ;;
         label:"1"}
       when: {
-        sql: ${pred} < 0.5 AND ${delayed} = 0 ;;
+        sql: ${pred} < 0.5 AND ${delayed} = "0" ;;
         label: "1"
       }
       else: "0"
 
     }
+  }
+
+  dimension: origin_coordinates {
+    type: location
+    sql_latitude: ${airport_data_origin.lat} ;;
+    sql_longitude: ${airport_data_origin.lon} ;;
+  }
+
+  dimension: destination_coordinates {
+    type: location
+    sql_latitude: ${airport_data_origin.lat} ;;
+    sql_longitude: ${airport_data_origin.lon} ;;
   }
 
   measure: accurate_prediction_count {
