@@ -1,6 +1,6 @@
 connection: "bigquery-gartner-demo"
 
-include: "/base_views/*.view.lkml"                # include all views in the views/ folder in this project
+include: "/layered_views/*.view.lkml"                # include all views in the views/ folder in this project
 
 explore: predict_output {
   group_label: "Looker Gartner Demo"
