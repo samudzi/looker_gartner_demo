@@ -30,6 +30,7 @@ view: +prototype_tf_train {
   measure: percent_delayed {
     sql: ${count_delayed}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
   measure: total_flight_volume {
@@ -83,6 +84,7 @@ view: +prototype_tf_train {
   measure: percent_origin_snow {
     sql: ${count_origin_snow}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
 
@@ -95,6 +97,7 @@ measure: count_origin_thunderstorm {
   measure: percent_origin_thunderstorm {
     sql: ${count_origin_thunderstorm}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
 measure: average_origin_windspeed {
@@ -122,6 +125,7 @@ measure: average_origin_windspeed_diff {
   measure: percent_origin_fog {
     sql: ${count_origin_fog}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
   measure: count_origin_hail {
@@ -133,6 +137,7 @@ measure: average_origin_windspeed_diff {
   measure: percent_origin_hail {
     sql: ${count_origin_hail}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
 
@@ -145,6 +150,7 @@ measure: average_origin_windspeed_diff {
   measure: percent_dest_snow {
     sql: ${count_destination_snow}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
   measure: count_destination_thunderstorm {
@@ -156,6 +162,7 @@ measure: average_origin_windspeed_diff {
   measure: percent_dest_thunderstorm {
     sql: ${count_destination_thunderstorm}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
   measure: average_destination_windspeed {
@@ -183,6 +190,7 @@ measure: average_origin_windspeed_diff {
   measure: percent_dest_fog {
     sql: ${count_destination_fog}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
   measure: count_dest_hail {
@@ -194,6 +202,7 @@ measure: average_origin_windspeed_diff {
   measure: percent_dest_hail {
     sql: ${count_dest_hail}/NULLIF(${count},0) ;;
     value_format_name: percent_1
+    type: number
   }
 
 
@@ -240,7 +249,7 @@ view: +predict_output {
   measure: accurate_prediction_count {
     sql: ${pred_isAccurate} ;;
     filters: [pred_isAccurate: "1"]
-    type: count_distinct
+    type: sum
   }
 
   measure: prediction_accuracy {
@@ -250,13 +259,15 @@ view: +predict_output {
   }
 
   measure: delayed_count {
-    sql: count(${delayed}) where ${delayed} = 1 ;;
-    type: number
+    sql: ${delayed};;
+    filters: [delayed: "1"]
+    type: sum
   }
 
   measure: nondelayed_count {
-    sql: count(${delayed}) where ${delayed} = 0 ;;
-    type: number
+    sql: ${delayed} ;;
+    filters: [delayed: "0"]
+    type: sum
   }
 
   measure:  percent_delayed {
