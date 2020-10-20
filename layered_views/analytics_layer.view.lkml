@@ -70,7 +70,7 @@ view: +prototype_tf_train {
 
   dimension: departure_time_window {
     type: tier
-    tiers: [0,800,1200,1600,2000]
+    tiers: [800,1200,1600,2000]
     style: relational
     sql: ${crsdep_time} ;;
   }
@@ -103,11 +103,13 @@ measure: count_origin_thunderstorm {
 measure: average_origin_windspeed {
   sql: ${origin_wdsp} ;;
   type: average
+  value_format_name: decimal_1
 }
 
 measure: average_origin_max_windspeed {
   sql: ${origin_max_wdsp} ;;
   type: average
+  value_format_name: decimal_1
 }
 
 measure: average_origin_windspeed_diff {
@@ -168,11 +170,13 @@ measure: average_origin_windspeed_diff {
   measure: average_destination_windspeed {
     sql: ${dest_wdsp} ;;
     type: average
+    value_format_name: decimal_1
   }
 
   measure: average_destination_max_windspeed {
     sql: ${dest_max_wdsp} ;;
     type: average
+    value_format_name: decimal_1
   }
 
   measure: average_destination_windspeed_diff {
