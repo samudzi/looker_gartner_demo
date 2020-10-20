@@ -7,7 +7,7 @@ view: +prototype_tf_train {
     type: time
     timeframes: [date,month,quarter,week,year,raw]
     datatype: date
-    }
+  }
 
   dimension: origin_coordinates {
     type: location
@@ -75,11 +75,11 @@ view: +prototype_tf_train {
     sql: ${crsdep_time} ;;
   }
 
- measure: count_origin_snow {
-  sql: cast(${origin_snow} as numeric) ;;
-  type: sum
-  filters: [origin_snow: "1"]
- }
+  measure: count_origin_snow {
+    sql: cast(${origin_snow} as numeric) ;;
+    type: sum
+    filters: [origin_snow: "1"]
+  }
 
   measure: percent_origin_snow {
     sql: ${count_origin_snow}/NULLIF(${count},0) ;;
@@ -88,11 +88,11 @@ view: +prototype_tf_train {
   }
 
 
-measure: count_origin_thunderstorm {
-  sql: cast(${origin_thunder} as numeric) ;;
-  type: sum
-  filters: [origin_thunder: "1"]
-}
+  measure: count_origin_thunderstorm {
+    sql: cast(${origin_thunder} as numeric) ;;
+    type: sum
+    filters: [origin_thunder: "1"]
+  }
 
   measure: percent_origin_thunderstorm {
     sql: ${count_origin_thunderstorm}/NULLIF(${count},0) ;;
@@ -100,23 +100,23 @@ measure: count_origin_thunderstorm {
     type: number
   }
 
-measure: average_origin_windspeed {
-  sql: ${origin_wdsp} ;;
-  type: average
-  value_format_name: decimal_1
-}
+  measure: average_origin_windspeed {
+    sql: ${origin_wdsp} ;;
+    type: average
+    value_format_name: decimal_1
+  }
 
-measure: average_origin_max_windspeed {
-  sql: ${origin_max_wdsp} ;;
-  type: average
-  value_format_name: decimal_1
-}
+  measure: average_origin_max_windspeed {
+    sql: ${origin_max_wdsp} ;;
+    type: average
+    value_format_name: decimal_1
+  }
 
-measure: average_origin_windspeed_diff {
-  sql: ${average_origin_max_windspeed} - ${average_origin_windspeed} ;;
-  type: number
-  value_format_name: decimal_1
-}
+  measure: average_origin_windspeed_diff {
+    sql: ${average_origin_max_windspeed} - ${average_origin_windspeed} ;;
+    type: number
+    value_format_name: decimal_1
+  }
 
   measure: count_origin_fog {
     sql: cast(${origin_fog} as numeric) ;;
@@ -251,7 +251,7 @@ view: +predict_output {
   }
 
   measure: accurate_prediction_count {
-    sql: ${pred_isAccurate} ;;
+    sql: cast(${pred_isAccurate} as numeric) ;;
     filters: [pred_isAccurate: "1"]
     type: sum
   }
@@ -263,13 +263,13 @@ view: +predict_output {
   }
 
   measure: delayed_count {
-    sql: ${delayed};;
+    sql: cast(${delayed} as numeric);;
     filters: [delayed: "1"]
     type: sum
   }
 
   measure: nondelayed_count {
-    sql: ${delayed} ;;
+    sql: cast(${delayed} as numeric) ;;
     filters: [delayed: "0"]
     type: sum
   }
