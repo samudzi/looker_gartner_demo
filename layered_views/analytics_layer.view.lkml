@@ -22,9 +22,14 @@ view: +prototype_tf_train {
   }
 
   measure: count_delayed {
-    sql: ${delayed} ;;
+    sql: CAST(${delayed} AS NUMERIC) ;;
     type: sum
     filters: [delayed: "1"]
+  }
+
+  measure: percent_delayed {
+    sql: ${count_delayed}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
   }
 
   measure: total_flight_volume {
@@ -70,22 +75,27 @@ view: +prototype_tf_train {
   }
 
  measure: count_origin_snow {
-  sql: ${origin_snow} ;;
+  sql: cast(${origin_snow} as numeric) ;;
   type: sum
   filters: [origin_snow: "1"]
  }
 
- measure: count_origin_precipitation {
-  sql: ${origin_prcp} ;;
-  type: sum
-  filters: [origin_prcp: "1"]
- }
+  measure: percent_origin_snow {
+    sql: ${count_origin_snow}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
+  }
+
 
 measure: count_origin_thunderstorm {
-  sql: ${origin_thunder} ;;
+  sql: cast(${origin_thunder} as numeric) ;;
   type: sum
   filters: [origin_thunder: "1"]
 }
+
+  measure: percent_origin_thunderstorm {
+    sql: ${count_origin_thunderstorm}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
+  }
 
 measure: average_origin_windspeed {
   sql: ${origin_wdsp} ;;
@@ -104,34 +114,48 @@ measure: average_origin_windspeed_diff {
 }
 
   measure: count_origin_fog {
-    sql: ${origin_fog} ;;
+    sql: cast(${origin_fog} as numeric) ;;
     type: sum
     filters: [origin_fog: "1"]
   }
 
+  measure: percent_origin_fog {
+    sql: ${count_origin_fog}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
+  }
+
   measure: count_origin_hail {
-    sql: ${origin_hail} ;;
+    sql: cast(${origin_hail} as numeric) ;;
     type: sum
     filters: [origin_hail: "1"]
   }
 
+  measure: percent_origin_hail {
+    sql: ${count_origin_hail}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
+  }
+
 
   measure: count_destination_snow {
-    sql: ${dest_snow} ;;
+    sql: cast(${dest_snow} as numeric) ;;
     type: sum
     filters: [dest_snow: "1"]
   }
 
-  measure: count_destination_precipitation {
-    sql: ${dest_prcp} ;;
-    type: sum
-    filters: [dest_prcp: "1"]
+  measure: percent_dest_snow {
+    sql: ${count_destination_snow}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
   }
 
   measure: count_destination_thunderstorm {
-    sql: ${dest_thunder} ;;
+    sql: cast(${dest_thunder} as numeric) ;;
     type: sum
     filters: [dest_thunder: "1"]
+  }
+
+  measure: percent_dest_thunderstorm {
+    sql: ${count_destination_thunderstorm}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
   }
 
   measure: average_destination_windspeed {
@@ -151,15 +175,25 @@ measure: average_origin_windspeed_diff {
   }
 
   measure: count_destination_fog {
-    sql: ${dest_fog} ;;
+    sql: cast(${dest_fog} as numeric) ;;
     type: sum
     filters: [dest_fog: "1"]
   }
 
+  measure: percent_dest_fog {
+    sql: ${count_destination_fog}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
+  }
+
   measure: count_dest_hail {
-    sql: ${dest_hail} ;;
+    sql: cast(${dest_hail} as numeric) ;;
     type: sum
     filters: [dest_hail: "1"]
+  }
+
+  measure: percent_dest_hail {
+    sql: ${count_dest_hail}/NULLIF(${count},0) ;;
+    value_format_name: percent_1
   }
 
 
