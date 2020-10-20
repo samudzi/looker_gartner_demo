@@ -17,7 +17,7 @@ explore: predict_output {
     from: airport_data
     relationship: many_to_one
     type: inner
-    sql_on: ${airport_data_origin.iata_code} = ${predict_output.dest} ;;
+    sql_on: ${airport_data_dest.iata_code} = ${predict_output.dest} ;;
   }
 }
 
@@ -38,6 +38,6 @@ explore: flight_analytics {
     from: airport_data
     relationship: many_to_one
     type: inner
-    sql_on: ${airport_data_origin.iata_code} = ${prototype_tf_train.dest} ;;
+    sql_on: ${airport_data_dest.iata_code} = ${prototype_tf_train.dest} ;;
   }
 }

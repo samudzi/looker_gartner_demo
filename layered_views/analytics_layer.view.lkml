@@ -17,14 +17,20 @@ view: +prototype_tf_train {
 
   dimension: destination_coordinates {
     type: location
-    sql_latitude: ${airport_data_origin.lat} ;;
-    sql_longitude: ${airport_data_origin.lon} ;;
+    sql_latitude: ${airport_data_dest.lat} ;;
+    sql_longitude: ${airport_data_dest.lon} ;;
   }
 
   measure: count_delayed {
-    sql: count(${delayed}) where ${delayed}=1 ;;
-    type: number
+    sql: ${delayed} ;;
+    type: sum
+    filters: [delayed: "1"]
   }
+
+  measure: total_flight_volume {
+    type: count
+  }
+
 
   measure: percent_delayed {
     sql: ${count_delayed}/NULLIF(${count},0) ;;
@@ -64,18 +70,21 @@ view: +prototype_tf_train {
   }
 
  measure: count_origin_snow {
-   sql: count(${origin_snow}) where ${origin_snow}=1 ;;
-   type: number
+  sql: ${origin_snow} ;;
+  type: sum
+  filters: [origin_snow: "1"]
  }
 
  measure: count_origin_precipitation {
-   sql: count(${origin_prcp}) where origin_prcp>0 ;;
-   type: number
+  sql: ${origin_prcp} ;;
+  type: sum
+  filters: [origin_prcp: "1"]
  }
 
 measure: count_origin_thunderstorm {
-  sql: count(${origin_thunder}) where ${origin_thunder}=1 ;;
-  type: number
+  sql: ${origin_thunder} ;;
+  type: sum
+  filters: [origin_thunder: "1"]
 }
 
 measure: average_origin_windspeed {
@@ -95,29 +104,34 @@ measure: average_origin_windspeed_diff {
 }
 
   measure: count_origin_fog {
-    sql: count(${origin_fog}) where ${origin_fog}=1 ;;
-    type: number
+    sql: ${origin_fog} ;;
+    type: sum
+    filters: [origin_fog: "1"]
   }
 
   measure: count_origin_hail {
-    sql: count(${origin_hail}) where ${origin_hail}=1 ;;
-    type: number
+    sql: ${origin_hail} ;;
+    type: sum
+    filters: [origin_hail: "1"]
   }
 
 
   measure: count_destination_snow {
-    sql: count(${dest_snow}) where ${dest_snow}=1 ;;
-    type: number
+    sql: ${dest_snow} ;;
+    type: sum
+    filters: [dest_snow: "1"]
   }
 
   measure: count_destination_precipitation {
-    sql: count(${dest_prcp}) where dest_prcp>0 ;;
-    type: number
+    sql: ${dest_prcp} ;;
+    type: sum
+    filters: [dest_prcp: "1"]
   }
 
   measure: count_destination_thunderstorm {
-    sql: count(${dest_thunder}) where ${dest_thunder}=1 ;;
-    type: number
+    sql: ${dest_thunder} ;;
+    type: sum
+    filters: [dest_thunder: "1"]
   }
 
   measure: average_destination_windspeed {
@@ -137,13 +151,15 @@ measure: average_origin_windspeed_diff {
   }
 
   measure: count_destination_fog {
-    sql: count(${dest_fog}) where ${dest_fog}=1 ;;
-    type: number
+    sql: ${dest_fog} ;;
+    type: sum
+    filters: [dest_fog: "1"]
   }
 
   measure: count_dest_hail {
-    sql: count(${dest_hail}) where ${dest_hail}=1 ;;
-    type: number
+    sql: ${dest_hail} ;;
+    type: sum
+    filters: [dest_hail: "1"]
   }
 
 
